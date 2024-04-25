@@ -1,19 +1,23 @@
-import mysql from 'mysql'
+import pg from 'pg';
 
-const con=mysql.createConnection({
-    host:"127.0.0.1",
-    user:"root",
-    password:"",
-    port:3306,
-    database:"nodeStudy",
-    insecureAuth: true
-})
-con.connect(function(err){
-    if(err){
-        console.log("connection error", err)
-    }else{
-        console.log("connected")
-    }
-})
+const {Client}= pg
 
-export default con
+// Create a new PostgreSQL client instance
+const client = new Client({
+    user: 'postgres', // PostgreSQL username
+    host: 'localhost', // PostgreSQL server host
+    database: 'nodestudy', // PostgreSQL database name
+    password: 'vava635', // PostgreSQL password (if any)
+    port: 5432 // PostgreSQL port (default is 5432)
+});
+
+// Connect to PostgreSQL server
+client.connect()
+    .then(() => {
+        console.log('Connected to PostgreSQL database');
+    })
+    .catch((err) => {
+        console.error('Error connecting to PostgreSQL database:', err);
+    });
+
+export default client;
