@@ -1,6 +1,6 @@
 import express from "express"
 import cors from "cors"
-import { loginRoute } from "./Routes/loginRoute.js"
+import { adminRoute } from "./Routes/adminRoute.js"
 
 const app= express()
 
@@ -10,7 +10,7 @@ app.use(cors({
     credentials: true
 }))
 app.use(express.json())
-app.use('/auth',loginRoute)
+app.use('/auth',adminRoute)
 
 
 app.listen(3001,()=>{
