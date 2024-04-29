@@ -37,4 +37,22 @@ router.post('/add_category',(req,res)=>{
     })
 })
 
+
+router.get('/category',(req,res)=>{
+    const psql ="SELECT * FROM category"
+    client.query(psql,(err,result)=>{
+        if(err) return res.json({status:false, Error:'Query error'})
+        return res.json({status: true, Result: result})
+    })
+})
+
+router.post('/add_employee',(req,res)=>{
+    const psql = 'INSERT INTO employee(name) VALUES($1)';
+    client.query(psql,[req.body.category],(err,result)=>{
+        if(err) return res.json({categoryAddtition: false, Error:"Query error"})
+
+        return res.json({categoryAddition: true})
+    })
+})
+
 export {router as adminRoute}
