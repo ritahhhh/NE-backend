@@ -10,7 +10,7 @@ app.use(cors({
     credentials: true
 }))
 app.use(express.json())
-app.use('/auth',adminRoute)
+app.use('/admin',adminRoute)
 
 
 app.listen(3001,()=>{
