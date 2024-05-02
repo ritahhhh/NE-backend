@@ -1,6 +1,7 @@
 import express from "express"
 import client from "../utils/db.js"
 import jwt from 'jsonwebtoken'
+import { useParams } from 'react-router-dom'
 
 const router= express.Router()
 
@@ -62,5 +63,38 @@ router.get('/employee',(req,res)=>{
         return res.json({status: true, Result: result})
     })
 })
+router.get('/employee/:id',(req,res)=>{
+    const id= req.params.id
+    const psql =`SELECT * FROM employee WHERE id=${id}`
+    client.query(psql,(err,result)=>{
+        if(err) return res.json({status:false, Error:'Query error'})
+        return res.json({status: true, Result: result})
+    })
+})
+
+router.put('/employee/:id', (req, res) => {
+    const id = req.params.id;
+    const { fullName, email, category, telnumber } = req.body;
+  
+    const query = `
+      UPDATE employee
+      SET fullNames = $1, email = $2, category = $3, phoneNumber = $4
+      WHERE id = ${id};
+    `;
+    const values = [fullName, email, category, telnumber];
+  
+    client.query(query, values, (err, result) => {
+      if (err) {
+        console.error('Query error:', err);
+        return res.status(500).json({ status: false, error: 'Query error' });
+      }
+  
+      if (result.rowCount === 0) {
+        return res.status(404).json({ status: false, error: 'Employee not found' });
+      }
+  
+      return res.json({ status: true, message: 'Employee updated successfully' });
+    });
+  });
 
 export {router as adminRoute}
