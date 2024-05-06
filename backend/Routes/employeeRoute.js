@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 
 const router= express.Router()
 
-router.post("/adminLogin",(req,res)=>{
+router.post("/employeeLogin",(req,res)=>{
     const psql='SELECT * FROM employee WHERE email = $1 AND password = $2'
     client.query(psql,[req.body.email, req.body.password],(err,result) => {
         if(err) return res.json({loginStatus: false, Error:"Query error"})
@@ -13,7 +13,7 @@ router.post("/adminLogin",(req,res)=>{
         if(result.rows.length > 0){
             const email=result.rows[0].email;
             const token= jwt.sign(
-                {role:"employee", email: email},
+                {role:"admin", email: email},
                 "jwt_secret_key",
                 {expiresIn:"1d"}
             );
@@ -29,15 +29,6 @@ router.post("/adminLogin",(req,res)=>{
 
 })
 
-router.post('/add_category',(req,res)=>{
-    const psql = 'INSERT INTO category(name) VALUES($1)';
-    client.query(psql,[req.body.category],(err,result)=>{
-        if(err) return res.json({categoryAddtition: false, Error:"Query error"})
-
-        return res.json({categoryAddition: true})
-    })
-})
-
 
 router.get('/category',(req,res)=>{
     const psql ="SELECT * FROM category"
@@ -47,14 +38,7 @@ router.get('/category',(req,res)=>{
     })
 })
 
-router.post('/add_employee',(req,res)=>{
-    const psql = `INSERT INTO employee(fullNames,email,category,phoneNumber,password) VALUES($1, $2, $3, $4,$5)`;
-    client.query(psql,[req.body.fullName,req.body.email,req.body.category,req.body.telnumber,req.body.password],(err,result)=>{
-        if(err) return res.json({employeeAddition: false, Error:'Query error'})
 
-        return res.json({employeeAddition:true, result: result})
-    })
-})
 
 router.get('/employee',(req,res)=>{
     const psql ="SELECT * FROM employee"
@@ -122,4 +106,4 @@ router.put('/employee/:id', (req, res) => {
     });
   });
 
-export {router as adminRoute}
+export {router as employeeRoute}
