@@ -1,18 +1,22 @@
 import express from "express"
 import cors from "cors"
-import { adminRoute } from "./Routes/adminRoute.js"
-import {employeeRoute} from "./Routes/employeeRoute.js"
+import { studentRoute } from "./Routes/studentRoute.js"
+import {booksRoute} from "./Routes/booksRoute.js"
+import morgan from 'morgan'
+// import auth from "./middlewares/auth.middleware.js"
+
 
 const app= express()
+app.use(morgan('dev'))
 
 app.use(cors({
-    origin:"http://localhost:3000",
+    origin:"http://localhost:5173",
     methods:['GET', 'POST', 'PUT'],
     credentials: true
 }))
 app.use(express.json())
-app.use('/admin',adminRoute)
-app.use('/employee',employeeRoute)
+app.use('/student',studentRoute)
+app.use('/book',booksRoute)
 
 
 app.listen(3001,()=>{
