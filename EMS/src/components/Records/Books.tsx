@@ -7,6 +7,8 @@ const Books = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [books, setBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [booksPerPage] = useState(3); // Adjust the number of books per page as needed
 
   const getBooks = async () => {
     try {
@@ -27,11 +29,19 @@ const Books = () => {
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset to first page when searching
   };
 
   const filteredBooks = books.filter((book) =>
     book.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Pagination logic
+  const indexOfLastBook = currentPage * booksPerPage;
+  const indexOfFirstBook = indexOfLastBook - booksPerPage;
+  const currentBooks = filteredBooks.slice(indexOfFirstBook, indexOfLastBook);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="bg-white mt-10 rounded-lg h-fit p-10">
@@ -66,7 +76,7 @@ const Books = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {filteredBooks.map((book) => (
+            {currentBooks.map((book) => (
               <tr key={book?.id} className="bg-white text-gray-900">
                 <td className="py-2 px-4 whitespace-nowrap font-medium text-gray-900">{book?.name}</td>
                 <td className="py-2 px-4 whitespace-nowrap font-medium text-gray-900">{book?.author}</td>
@@ -92,7 +102,21 @@ const Books = () => {
         </table>
       </div>
       {error && <p className="text-red-500">{error}</p>}
+
+      {/* Pagination controls */}
+      <div className="mt-4 flex justify-center">
+        {Array.from({ length: Math.ceil(filteredBooks.length / booksPerPage) }, (_, index) => (
+          <button
+            key={index}
+            onClick={() => paginate(index + 1)}
+            className={`mx-1 px-3 py-1 bg-blue-500 text-white rounded-md ${currentPage === index + 1 ? 'bg-blue-600' : ''}`}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
-export default Books
+
+export default Books;

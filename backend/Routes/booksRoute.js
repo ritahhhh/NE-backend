@@ -7,7 +7,7 @@ const router= express.Router()
 
 router.post('/add_book',(req,res)=>{
   const sql = `INSERT INTO books(name,author,publisher,publishedyear,subject) VALUES( ?,  ?, ?, ?, ? )`
-  
+
   client.query(sql,[req.body.name ,req.body.author ,req.body.publisher ,req.body.publicationYear ,req.body.subject],(err,result)=>{
     if(err) return res.json({message:"Adding book not possible",Error:'Query error'})
 
@@ -22,7 +22,15 @@ router.get('/books',(req,res)=>{
         return res.json({status: true, Result: result})
     })
 })
-
+router.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.json({ logout: false, Error: 'Logout error' });
+    }
+    res.clearCookie('connect.sid'); // Optional: Clear the session cookie
+    return res.json({ logout: true });
+  });
+});
 
 
 

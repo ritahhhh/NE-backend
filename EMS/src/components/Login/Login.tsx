@@ -4,7 +4,7 @@ import LoginRight from "./LoginRight";
 const Login= ()=>{
     return(
         <div className=" flex items-center justify-center flex-row bg-white h-full">
-        <div className='w-9/12 h-[87.5%] flex flex-row overflow-hidden '>
+        <div className='w-full h-full flex flex-row justify-between  overflow-hidden '>
     
        <LoginLeft  />
        <LoginRight />

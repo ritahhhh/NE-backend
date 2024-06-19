@@ -21,7 +21,7 @@ const Dashboard = () => {
         <div className="flex flex-col h-full w-full justify-center ">
           <div className="flex justify-between w-full md:hidden">
             <span className="text-[#0469a3c2] font-extrabold">
-              Equipment Distribution System
+              Library Management System
             </span>
             <button
               onClick={() => setIsSidebarOpen(false)}
@@ -32,7 +32,7 @@ const Dashboard = () => {
           </div>
           <div className="h-[50%] flex flex-col justify-center gap-y-12 mt-4 md:mt-0">
             <span className="hidden md:block text-[#0469a3c2] font-extrabold">
-              Equipment Distribution System
+              Library Management System
             </span>
             <button
               className="w-full h-10 flex flex-row bg-[#0469a3c2] text-white items-center justify-start px-4 rounded"

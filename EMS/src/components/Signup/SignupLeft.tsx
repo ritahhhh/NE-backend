@@ -153,7 +153,7 @@ const SignupLeft = () => {
               </button>
               <p className="text-sm font-light text-gray-500">
                 Already have an account yet?{' '}
-                <a href="/studentLogin" className="font-medium text-white hover:underline bg-blue-500 ">
+                <a href="/" className="font-medium  hover:underline text-blue-500 ">
                   Register
                 </a>
               </p>

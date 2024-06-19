@@ -5,7 +5,7 @@ const Signup=()=>{
     return(
 
       <div className=" flex flex-col items-center justify-center flex-row bg-white h-full">
-        <div className='w-9/12 h-[87.5%] flex flex-row overflow-hidden '>
+        <div className='w-full h-full flex flex-row justify-between overflow-hidden '>
             <SignupRight />
             <SignupLeft />
             </div>
