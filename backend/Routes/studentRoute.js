@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Student login route
 router.post("/studentLogin", (req, res) => {
-    const psql = 'SELECT * FROM users WHERE email = ?';
+    const psql = 'SELECT * FROM students WHERE email = ?';
 
     client.query(psql, [req.body.email], async (err, result) => {
         if (err) return res.json({ loginStatus: false, Error: "Query error" });
@@ -36,7 +36,7 @@ router.post("/studentLogin", (req, res) => {
 
 // Student signup route
 router.post('/signup', async (req, res) => {
-    const psql = `INSERT INTO users(firstName, lastName, email, password) VALUES(?, ?, ?, ?)`;
+    const psql = `INSERT INTO students(firstName, lastName, email, password) VALUES(?, ?, ?, ?)`;
 
     try {
         const saltRounds = 10;
@@ -48,7 +48,7 @@ router.post('/signup', async (req, res) => {
               return res.json({ studentAddition: false, Error: 'Query error' });
           }
 
-            return res.json({  result: {...result,studentAddition: true} });
+            return res.json({  ...result,studentAddition:true });
         });
     } catch (error) {
         return res.json({ studentAddition: false, Error: 'Password hashing error' });
